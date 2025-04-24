@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS entradas_financeiras (
+    id SERIAL PRIMARY KEY, 
+    nome TEXT NOT NULL,
+    classificacao TEXT NOT NULL,
+    valor REAL NOT NULL,
+    data_entrada DATE NOT NULL,
+    data_cadastro TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

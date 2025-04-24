@@ -10,6 +10,6 @@ import Conexao.Conexao;
  *
  * @author 0074965
  */
-public class leituraBackup {
+public class leituraInserirBackup {
     Conexao c = new Conexao();
 }
