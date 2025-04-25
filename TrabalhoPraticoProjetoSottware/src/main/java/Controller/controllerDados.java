@@ -1,6 +1,12 @@
 package Controller;
 
+import Dao.leituraInserirDados;
+import Model.dadoTabela;
+
 public class controllerDados {
-    //teste 
-    
+
+    public void inserirDado(dadoTabela d) {
+        leituraInserirDados lid = new leituraInserirDados();
+        lid.adicionarBanco(d);
+    }
 }

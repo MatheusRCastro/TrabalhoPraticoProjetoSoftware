@@ -9,17 +9,26 @@ public class dadoTabela {
     private double valor;
     private Date data;
     private Date Cadastro;
+    private boolean excluido;
 
     private double totalGanhos;
     private double totalDespesas;
     private double diferenca;
 
-    public dadoTabela(String nome, String classificacao, double valor, Date data, Date Cadastro) {
+    public dadoTabela(String nome, String classificacao, double valor, Date data, Date Cadastro, boolean excluido) {
         this.nome = nome;
         this.classificacao = classificacao;
         this.valor = valor;
         this.data = data;
         this.Cadastro = Cadastro;
+        this.excluido = excluido;
+    }
+
+    public dadoTabela(String nome, String classificacao, double valor, Date data) {
+        this.nome = nome;
+        this.classificacao = classificacao;
+        this.valor = valor;
+        this.data = data;
     }
 
     public dadoTabela(double totalGanhos, double totalDespesas, double diferenca) {
