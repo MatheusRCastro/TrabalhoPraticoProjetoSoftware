@@ -43,4 +43,14 @@ public class controllerDados {
         leituraInserirDados lid = new leituraInserirDados();
         lid.preencherTabelaIntervalo(t, inicio, fim);
     }
+    
+    public void excluirDado(JTable t){
+        leituraInserirDados lid = new leituraInserirDados();
+        lid.excluirDado(t);
+    }
+    
+    public void preencherTabela(JTable t){
+        leituraInserirDados lid = new  leituraInserirDados();
+        lid.preencherTabela(t);
+    }
 }

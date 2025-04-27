@@ -29,10 +29,10 @@ public class TabelaFinanceira extends javax.swing.JFrame {
     public TabelaFinanceira() {
         initComponents();
         leituraInserirDados lid = new leituraInserirDados();
-        lid.preencherTabela(jTable1);
+        lid.preencherTabela(tabela);
 
         controllerDados cd = new controllerDados();
-        cd.atualizaDados(jTable1);
+        cd.atualizaDados(tabela);
 
         dadoTabela dt = new dadoTabela();
         valorRecebido.setText(String.valueOf(dt.getTotalGanhos()));
@@ -101,27 +101,27 @@ public class TabelaFinanceira extends javax.swing.JFrame {
             controllerDados cd = new controllerDados();
             java.util.Date comeco;
             java.util.Date fina;
-            
+
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-            
+
             comeco = formato.parse(dataComecoBusca.getText());
             fina = formato.parse(dataFinalBusca.getText());
-            
+
             java.sql.Date comeco1 = new java.sql.Date(comeco.getTime());
             java.sql.Date fina1 = new java.sql.Date(fina.getTime());
-            
-            cd.atualizarTabelaIntervalo(jTable1,comeco1, fina1);
+
+            cd.atualizarTabelaIntervalo(tabela, comeco1, fina1);
         } catch (ParseException ex) {
             Logger.getLogger(TabelaFinanceira.class.getName()).log(Level.SEVERE, null, ex);
         }
         controllerDados cd = new controllerDados();
-        cd.atualizaDados(jTable1);
+        cd.atualizaDados(tabela);
 
         dadoTabela dt = new dadoTabela();
         valorRecebido.setText(String.valueOf(dt.getTotalGanhos()));
         valorGastos.setText(String.valueOf(dt.getTotalDespesas()));
         valorDiferenca.setText(String.valueOf(dt.getDiferenca()));
-        
+
     }
 
     /**
@@ -135,7 +135,7 @@ public class TabelaFinanceira extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabela = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -146,7 +146,7 @@ public class TabelaFinanceira extends javax.swing.JFrame {
         dataFinalBusca = new javax.swing.JFormattedTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        botaoDeletar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         valorRecebido = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -165,7 +165,7 @@ public class TabelaFinanceira extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -176,7 +176,7 @@ public class TabelaFinanceira extends javax.swing.JFrame {
                 "Nome", "Classificação", "Valor", "Data", "Cadastro"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabela);
 
         jLabel1.setText("Nome:");
 
@@ -206,12 +206,12 @@ public class TabelaFinanceira extends javax.swing.JFrame {
 
         jLabel7.setText("De:");
 
-        jButton1.setBackground(new java.awt.Color(255, 0, 0));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("X");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        botaoDeletar.setBackground(new java.awt.Color(255, 0, 0));
+        botaoDeletar.setForeground(new java.awt.Color(255, 255, 255));
+        botaoDeletar.setText("X");
+        botaoDeletar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botaoDeletarActionPerformed(evt);
             }
         });
 
@@ -300,7 +300,7 @@ public class TabelaFinanceira extends javax.swing.JFrame {
                         .addComponent(dataFinalBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 607, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(botaoDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -367,7 +367,7 @@ public class TabelaFinanceira extends javax.swing.JFrame {
                         .addGap(18, 18, 18))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(178, 178, 178)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(botaoDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -399,9 +399,22 @@ public class TabelaFinanceira extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void botaoDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDeletarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        controllerDados cd = new controllerDados();
+        
+        if (JOptionPane.showConfirmDialog(null, "Você deseja realmente excluir esse registro?") == 0) {
+
+            cd.excluirDado(tabela);
+        }
+        cd.preencherTabela(tabela);
+        cd.atualizaDados(tabela);
+        
+        dadoTabela dt = new dadoTabela();
+        valorRecebido.setText(String.valueOf(dt.getTotalGanhos()));
+        valorGastos.setText(String.valueOf(dt.getTotalDespesas()));
+        valorDiferenca.setText(String.valueOf(dt.getDiferenca()));
+    }//GEN-LAST:event_botaoDeletarActionPerformed
 
     private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
         // TODO add your handling code here:
@@ -421,14 +434,14 @@ public class TabelaFinanceira extends javax.swing.JFrame {
         dadoTabela d = new dadoTabela(nome.getText(), classificacao.getText(), Double.parseDouble(valor.getText()), data_sql);
 
         controllerDados cd = new controllerDados();
-        cd.inserirDado(d, jTable1);
+        cd.inserirDado(d, tabela);
 
         nome.setText("");
         classificacao.setText("");
         valor.setText("");
         dataDaEntrada.setText("");
 
-        cd.atualizaDados(jTable1);
+        cd.atualizaDados(tabela);
 
         dadoTabela dt = new dadoTabela();
         valorRecebido.setText(String.valueOf(dt.getTotalGanhos()));
@@ -458,9 +471,9 @@ public class TabelaFinanceira extends javax.swing.JFrame {
         if (botaoMesAtual1.isSelected()) {
             controllerDados cd = new controllerDados();
 
-            cd.dadosMesAtual(jTable1);
+            cd.dadosMesAtual(tabela);
 
-            cd.atualizaDados(jTable1);
+            cd.atualizaDados(tabela);
 
             dadoTabela dt = new dadoTabela();
             valorRecebido.setText(String.valueOf(dt.getTotalGanhos()));
@@ -468,10 +481,10 @@ public class TabelaFinanceira extends javax.swing.JFrame {
             valorDiferenca.setText(String.valueOf(dt.getDiferenca()));
         } else {
             leituraInserirDados lid = new leituraInserirDados();
-            lid.preencherTabela(jTable1);
+            lid.preencherTabela(tabela);
 
             controllerDados cd = new controllerDados();
-            cd.atualizaDados(jTable1);
+            cd.atualizaDados(tabela);
 
             dadoTabela dt = new dadoTabela();
             valorRecebido.setText(String.valueOf(dt.getTotalGanhos()));
@@ -517,6 +530,7 @@ public class TabelaFinanceira extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCadastrar;
+    private javax.swing.JButton botaoDeletar;
     private javax.swing.JButton botaoGanho;
     private javax.swing.JToggleButton botaoMesAtual1;
     private javax.swing.JButton botaoPerda;
@@ -524,7 +538,6 @@ public class TabelaFinanceira extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField dataComecoBusca;
     private javax.swing.JTextField dataDaEntrada;
     private javax.swing.JFormattedTextField dataFinalBusca;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
@@ -537,8 +550,8 @@ public class TabelaFinanceira extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField nome;
+    private javax.swing.JTable tabela;
     private javax.swing.JTextField valor;
     private javax.swing.JLabel valorDiferenca;
     private javax.swing.JLabel valorGastos;
