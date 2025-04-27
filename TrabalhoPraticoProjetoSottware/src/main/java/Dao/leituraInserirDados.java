@@ -185,5 +185,31 @@ public class leituraInserirDados {
             JOptionPane.showMessageDialog(null, "Selecione uma linha para excluir.");
         }
     }
+    
+    public void desfazerExclusao() {
+    String sql = "UPDATE trabalhoPratico.financas " +
+                 "SET excluido = FALSE, data_exclusao = NULL " +
+                 "WHERE id = (" +
+                 "    SELECT id FROM trabalhoPratico.financas " +
+                 "    WHERE excluido = TRUE " +
+                 "    ORDER BY data_exclusao DESC " +
+                 "    LIMIT 1" +
+                 ");";
+
+    try (Connection conn = Conexao.obterConexao();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        int rowsAffected = stmt.executeUpdate();
+        
+        if (rowsAffected > 0) {
+            System.out.println("Último registro excluído restaurado com sucesso!");
+        } else {
+            System.out.println("Nenhum registro para restaurar.");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+
 
 }

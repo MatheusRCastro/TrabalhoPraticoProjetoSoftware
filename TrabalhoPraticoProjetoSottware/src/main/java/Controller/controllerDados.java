@@ -53,4 +53,11 @@ public class controllerDados {
         leituraInserirDados lid = new  leituraInserirDados();
         lid.preencherTabela(t);
     }
+    
+    public void desfazerExclusao(JTable t){
+        leituraInserirDados lid = new leituraInserirDados();
+        lid.desfazerExclusao();
+        
+        preencherTabela(t);
+    }
 }
