@@ -11,9 +11,9 @@ public class dadoTabela {
     private Date Cadastro;
     private boolean excluido;
 
-    private double totalGanhos;
-    private double totalDespesas;
-    private double diferenca;
+    private static double totalGanhos;
+    private static double totalDespesas;
+    private static double diferenca;
 
     public dadoTabela(String nome, String classificacao, double valor, Date data, Date Cadastro, boolean excluido) {
         this.nome = nome;

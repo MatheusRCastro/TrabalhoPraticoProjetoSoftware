@@ -1,6 +1,7 @@
 package Dao;
 
 import Conexao.Conexao;
+import Controller.controllerDados;
 import Model.dadoTabela;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,11 +34,11 @@ public class leituraInserirDados {
         }
     }
 
-    public void preencherTabela(JTable tabela) {
-        DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
+    public void preencherTabela(JTable t) {
+        DefaultTableModel modelo = (DefaultTableModel) t.getModel();
         modelo.setRowCount(0); // Limpa a tabela antes de inserir novos dados
 
-        String sql = "SELECT nome, classificacao, valor, data_entrada, data_cadastro FROM trabalhoPratico.financas WHERE excluido = FALSE ORDER BY data_entrada ASC";
+        String sql = "SELECT nome, classificacao, valor, data_entrada, data_cadastro FROM trabalhoPratico.financas WHERE excluido = FALSE ORDER BY data_entrada DESC";
 
         try (Connection con = Conexao.obterConexao(); PreparedStatement stmt = con.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
 
@@ -49,9 +50,9 @@ public class leituraInserirDados {
                 Date cadastro = rs.getDate("data_cadastro");
 
                 SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-                
-                String data1 = formato.format(data);
-                String cadastro1 = formato.format(cadastro);
+
+                String data1 = (data != null) ? formato.format(data) : "";
+                String cadastro1 = (cadastro != null) ? formato.format(cadastro) : "";
 
                 modelo.addRow(new Object[]{nome, classificacao, valor, data1, cadastro1});
             }
@@ -61,7 +62,7 @@ public class leituraInserirDados {
             JOptionPane.showMessageDialog(null, "Erro ao preencher a tabela: " + e.getMessage());
         }
     }
-
+ 
     public void preencherTabelaMesAtual(JTable tabela) {
         DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
         modelo.setRowCount(0); // Limpa a tabela antes de inserir novos dados
@@ -72,7 +73,7 @@ public class leituraInserirDados {
         WHERE excluido = FALSE 
           AND EXTRACT(MONTH FROM data_entrada) = EXTRACT(MONTH FROM CURRENT_DATE)
           AND EXTRACT(YEAR FROM data_entrada) = EXTRACT(YEAR FROM CURRENT_DATE)
-        ORDER BY data_entrada ASC
+        ORDER BY data_entrada DESC
         """;
 
         try (Connection con = Conexao.obterConexao(); PreparedStatement stmt = con.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {

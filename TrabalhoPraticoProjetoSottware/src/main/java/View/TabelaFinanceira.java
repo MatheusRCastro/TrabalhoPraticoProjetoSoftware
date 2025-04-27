@@ -25,6 +25,14 @@ public class TabelaFinanceira extends javax.swing.JFrame {
         initComponents();
         leituraInserirDados lid = new leituraInserirDados();
         lid.preencherTabela(jTable1);
+
+        controllerDados cd = new controllerDados();
+        cd.atualizaDados(jTable1);
+
+        dadoTabela dt = new dadoTabela();
+        valorRecebido.setText(String.valueOf(dt.getTotalGanhos()));
+        valorGastos.setText(String.valueOf(dt.getTotalDespesas()));
+        valorDiferenca.setText(String.valueOf(dt.getDiferenca()));
     }
 
     /**
@@ -49,21 +57,20 @@ public class TabelaFinanceira extends javax.swing.JFrame {
         dataFinalBusca = new javax.swing.JFormattedTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        botaoMesAtual = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        valorRecebido = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        valorGastos = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
+        valorDiferenca = new javax.swing.JLabel();
         nome = new javax.swing.JTextField();
         classificacao = new javax.swing.JTextField();
         valor = new javax.swing.JTextField();
         dataDaEntrada = new javax.swing.JTextField();
         botaoGanho = new javax.swing.JButton();
         botaoPerda = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        botaoMesAtual1 = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,15 +117,6 @@ public class TabelaFinanceira extends javax.swing.JFrame {
 
         jLabel7.setText("De:");
 
-        botaoMesAtual.setBackground(new java.awt.Color(0, 153, 0));
-        botaoMesAtual.setForeground(new java.awt.Color(255, 255, 255));
-        botaoMesAtual.setText("MÊS ATUAL");
-        botaoMesAtual.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoMesAtualActionPerformed(evt);
-            }
-        });
-
         jButton1.setBackground(new java.awt.Color(255, 0, 0));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("X");
@@ -130,15 +128,15 @@ public class TabelaFinanceira extends javax.swing.JFrame {
 
         jLabel8.setText("Recebido:");
 
-        jLabel9.setText("0,0R$");
+        valorRecebido.setText("0,0R$");
 
         jLabel10.setText("Gastos:");
 
-        jLabel11.setText("0,0R$");
+        valorGastos.setText("0,0R$");
 
         jLabel12.setText("Diferença:");
 
-        jLabel13.setText("0,0R$");
+        valorDiferenca.setText("0,0R$");
 
         botaoGanho.setBackground(new java.awt.Color(0, 204, 0));
         botaoGanho.setForeground(new java.awt.Color(255, 255, 255));
@@ -158,9 +156,14 @@ public class TabelaFinanceira extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(255, 255, 0));
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Filtrar");
+        botaoMesAtual1.setBackground(new java.awt.Color(0, 153, 0));
+        botaoMesAtual1.setForeground(new java.awt.Color(255, 255, 255));
+        botaoMesAtual1.setText("MÊS ATUAL");
+        botaoMesAtual1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoMesAtual1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -180,10 +183,6 @@ public class TabelaFinanceira extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(classificacao))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nome))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(4, 4, 4)
                                 .addComponent(dataDaEntrada))
@@ -193,11 +192,15 @@ public class TabelaFinanceira extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(botaoGanho, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(botaoPerda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addGap(18, 18, 18)
+                                .addComponent(botaoPerda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(nome)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(botaoMesAtual)
+                        .addComponent(botaoMesAtual1)
                         .addGap(116, 116, 116)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -205,9 +208,7 @@ public class TabelaFinanceira extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(dataFinalBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton4))
+                        .addComponent(dataFinalBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 607, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -220,35 +221,31 @@ public class TabelaFinanceira extends javax.swing.JFrame {
                 .addGap(267, 267, 267)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9)
+                .addComponent(valorRecebido)
                 .addGap(146, 146, 146)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel11)
+                .addComponent(valorGastos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel13)
+                .addComponent(valorDiferenca)
                 .addGap(85, 85, 85))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel5)
+                .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(botaoMesAtual))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel7)
-                                .addComponent(dataComecoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel6)
-                                .addComponent(dataFinalBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton4)))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(dataComecoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(botaoMesAtual1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel6)
+                        .addComponent(dataFinalBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(41, 41, 41)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -269,7 +266,7 @@ public class TabelaFinanceira extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel4)
                                     .addComponent(dataDaEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(botaoGanho)
                                     .addComponent(botaoPerda))
@@ -285,11 +282,11 @@ public class TabelaFinanceira extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jLabel9)
+                    .addComponent(valorRecebido)
                     .addComponent(jLabel10)
-                    .addComponent(jLabel11)
+                    .addComponent(valorGastos)
                     .addComponent(jLabel12)
-                    .addComponent(jLabel13))
+                    .addComponent(valorDiferenca))
                 .addGap(44, 44, 44))
         );
 
@@ -297,11 +294,17 @@ public class TabelaFinanceira extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -330,19 +333,19 @@ public class TabelaFinanceira extends javax.swing.JFrame {
 
         controllerDados cd = new controllerDados();
         cd.inserirDado(d, jTable1);
-        
+
         nome.setText("");
         classificacao.setText("");
         valor.setText("");
         dataDaEntrada.setText("");
-    }//GEN-LAST:event_botaoCadastrarActionPerformed
 
-    private void botaoMesAtualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoMesAtualActionPerformed
-        // TODO add your handling code here:
-        controllerDados cd = new controllerDados();
-        
-        cd.dadosMesAtual(jTable1);
-    }//GEN-LAST:event_botaoMesAtualActionPerformed
+        cd.atualizaDados(jTable1);
+
+        dadoTabela dt = new dadoTabela();
+        valorRecebido.setText(String.valueOf(dt.getTotalGanhos()));
+        valorGastos.setText(String.valueOf(dt.getTotalDespesas()));
+        valorDiferenca.setText(String.valueOf(dt.getDiferenca()));
+    }//GEN-LAST:event_botaoCadastrarActionPerformed
 
     private void botaoPerdaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPerdaActionPerformed
         // TODO add your handling code here:
@@ -360,6 +363,33 @@ public class TabelaFinanceira extends javax.swing.JFrame {
             valor.setText(y);
         }
     }//GEN-LAST:event_botaoGanhoActionPerformed
+
+    private void botaoMesAtual1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoMesAtual1ActionPerformed
+        // TODO add your handling code here:
+        if (botaoMesAtual1.isSelected()) {
+            controllerDados cd = new controllerDados();
+
+            cd.dadosMesAtual(jTable1);
+
+            cd.atualizaDados(jTable1);
+
+            dadoTabela dt = new dadoTabela();
+            valorRecebido.setText(String.valueOf(dt.getTotalGanhos()));
+            valorGastos.setText(String.valueOf(dt.getTotalDespesas()));
+            valorDiferenca.setText(String.valueOf(dt.getDiferenca()));
+        }else{
+            leituraInserirDados lid = new leituraInserirDados();
+            lid.preencherTabela(jTable1);
+            
+            controllerDados cd = new controllerDados();
+            cd.atualizaDados(jTable1);
+
+            dadoTabela dt = new dadoTabela();
+            valorRecebido.setText(String.valueOf(dt.getTotalGanhos()));
+            valorGastos.setText(String.valueOf(dt.getTotalDespesas()));
+            valorDiferenca.setText(String.valueOf(dt.getDiferenca()));
+        }
+    }//GEN-LAST:event_botaoMesAtual1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -399,19 +429,16 @@ public class TabelaFinanceira extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCadastrar;
     private javax.swing.JButton botaoGanho;
-    private javax.swing.JButton botaoMesAtual;
+    private javax.swing.JToggleButton botaoMesAtual1;
     private javax.swing.JButton botaoPerda;
     private javax.swing.JTextField classificacao;
     private javax.swing.JFormattedTextField dataComecoBusca;
     private javax.swing.JTextField dataDaEntrada;
     private javax.swing.JFormattedTextField dataFinalBusca;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -419,11 +446,13 @@ public class TabelaFinanceira extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField nome;
     private javax.swing.JTextField valor;
+    private javax.swing.JLabel valorDiferenca;
+    private javax.swing.JLabel valorGastos;
+    private javax.swing.JLabel valorRecebido;
     // End of variables declaration//GEN-END:variables
 }
