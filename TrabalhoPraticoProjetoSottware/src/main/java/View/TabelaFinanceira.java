@@ -11,6 +11,11 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
@@ -33,6 +38,90 @@ public class TabelaFinanceira extends javax.swing.JFrame {
         valorRecebido.setText(String.valueOf(dt.getTotalGanhos()));
         valorGastos.setText(String.valueOf(dt.getTotalDespesas()));
         valorDiferenca.setText(String.valueOf(dt.getDiferenca()));
+
+        dataComecoBusca.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) {
+                verificarPreenchimento();
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+                verificarPreenchimento();
+            }
+
+            public void changedUpdate(DocumentEvent e) {
+                verificarPreenchimento();
+            }
+        });
+
+        dataFinalBusca.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) {
+                verificarPreenchimento();
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+                verificarPreenchimento();
+            }
+
+            public void changedUpdate(DocumentEvent e) {
+                verificarPreenchimento();
+            }
+        });
+    }
+
+    private void verificarPreenchimento() {
+        String inicio = dataComecoBusca.getText();
+        String fim = dataFinalBusca.getText();
+
+        if (validarData(inicio) && validarData(fim)) {
+            atualizarTabela();
+        }
+    }
+
+    private boolean validarData(String data) {
+        if (data.length() != 10) {
+            return false;
+        }
+
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        formato.setLenient(false);
+
+        try {
+            formato.parse(data);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
+    }
+
+    private void atualizarTabela() {
+        try {
+            System.out.println("Datas corretas! Atualizando a tabela...");
+            // Aqui você chama o seu método que faz o SELECT no banco e atualiza a JTable
+            //JOptionPane.showInternalMessageDialog(null,"Olá");
+            controllerDados cd = new controllerDados();
+            java.util.Date comeco;
+            java.util.Date fina;
+            
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            
+            comeco = formato.parse(dataComecoBusca.getText());
+            fina = formato.parse(dataFinalBusca.getText());
+            
+            java.sql.Date comeco1 = new java.sql.Date(comeco.getTime());
+            java.sql.Date fina1 = new java.sql.Date(fina.getTime());
+            
+            cd.atualizarTabelaIntervalo(jTable1,comeco1, fina1);
+        } catch (ParseException ex) {
+            Logger.getLogger(TabelaFinanceira.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        controllerDados cd = new controllerDados();
+        cd.atualizaDados(jTable1);
+
+        dadoTabela dt = new dadoTabela();
+        valorRecebido.setText(String.valueOf(dt.getTotalGanhos()));
+        valorGastos.setText(String.valueOf(dt.getTotalDespesas()));
+        valorDiferenca.setText(String.valueOf(dt.getDiferenca()));
+        
     }
 
     /**
@@ -377,10 +466,10 @@ public class TabelaFinanceira extends javax.swing.JFrame {
             valorRecebido.setText(String.valueOf(dt.getTotalGanhos()));
             valorGastos.setText(String.valueOf(dt.getTotalDespesas()));
             valorDiferenca.setText(String.valueOf(dt.getDiferenca()));
-        }else{
+        } else {
             leituraInserirDados lid = new leituraInserirDados();
             lid.preencherTabela(jTable1);
-            
+
             controllerDados cd = new controllerDados();
             cd.atualizaDados(jTable1);
 

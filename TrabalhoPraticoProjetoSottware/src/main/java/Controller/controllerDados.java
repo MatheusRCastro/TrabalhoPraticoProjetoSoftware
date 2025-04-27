@@ -3,6 +3,7 @@ package Controller;
 import Dao.leituraInserirDados;
 import Model.dadoTabela;
 import View.TabelaFinanceira;
+import java.sql.Date;
 import javax.swing.JTable;
 
 public class controllerDados {
@@ -36,5 +37,10 @@ public class controllerDados {
         }
         
         dt.setDiferenca(dt.getTotalGanhos() + dt.getTotalDespesas());
+    }
+    
+    public void atualizarTabelaIntervalo(JTable t, Date inicio, Date fim){
+        leituraInserirDados lid = new leituraInserirDados();
+        lid.preencherTabelaIntervalo(t, inicio, fim);
     }
 }
